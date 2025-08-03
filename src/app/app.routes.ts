@@ -1,19 +1,20 @@
 import { Routes } from '@angular/router';
+import { Shop } from './pages/shop/shop';
+import { Product } from './pages/product/product';
+import { Feedback } from './pages/feedback/feedback';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./pages/shop/shop').then((m) => m.Shop),
+    component: Shop,
     pathMatch: 'full',
   },
   {
     path: 'product/:id',
-    loadComponent: () =>
-      import('./pages/product/product').then((m) => m.Product),
+    component: Product,
   },
   {
     path: 'feedback',
-    loadComponent: () =>
-      import('./pages/feedback/feedback').then((m) => m.Feedback),
+    component: Feedback,
   },
 ];
