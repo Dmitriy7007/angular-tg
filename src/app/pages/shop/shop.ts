@@ -11,9 +11,13 @@ import { Products } from '../../services/products';
 export class Shop {
   telegram = inject(Telegram);
   products = inject(Products);
+  user: string;
 
   constructor() {
     this.telegram.MainButton.show();
+    this.user = this.telegram.User || 'shop';
+
     console.log(this.products.byGroup);
+    console.log(this.telegram.User);
   }
 }
