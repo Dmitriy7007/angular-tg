@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Telegram } from './services/telegram';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,10 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   title = signal('angular-app');
+
+  telegram = inject(Telegram);
+
+  constructor() {
+    this.telegram.ready();
+  }
 }

@@ -11,7 +11,15 @@ export class Telegram {
     return this.tg.MainButton;
   }
 
+  get BackButton() {
+    return this.tg.BackButton;
+  }
+
   get User() {
     return this.tg.initDataUnsafe?.user?.first_name;
+  }
+
+  ready() {
+    this.tg.ready();
   }
 }
