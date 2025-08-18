@@ -23,7 +23,7 @@ export class Product implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['shop']);
+    this.router.navigate(['/']);
   }
 
   ngOnInit() {
