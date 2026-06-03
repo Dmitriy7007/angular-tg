@@ -9,10 +9,10 @@
   </div>
 } @else {
   @for (group of projectsService.groups(); track group) {
-    <app-product-list
+    <app-project-list
       [title]="projectsService.getGroupLabel(group)"
       [subtitle]="'Портфолио'"
       [projects]="projectsService.byGroup()[group]"
-    ></app-product-list>
+    ></app-project-list>
   }
 }

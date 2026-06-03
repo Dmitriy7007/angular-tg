@@ -1,33 +1,35 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, computed, OnInit, OnDestroy } from '@angular/core';
 import { Telegram } from '../../services/telegram';
-import { IProject, ProjectsService } from '../../services/projects';
+import { ProjectsService } from '../../services/projects';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Icon } from '../../components/icon/icon';
 
 @Component({
   selector: 'app-product',
-  imports: [],
+  imports: [Icon],
   templateUrl: './product.html',
   styleUrl: './product.css',
 })
 export class Product implements OnInit, OnDestroy {
-  project: IProject | undefined;
-  projectId: string;
-  telegram = inject(Telegram);
-  projectsService = inject(ProjectsService);
-  router = inject(Router);
-  route = inject(ActivatedRoute);
+  private telegram = inject(Telegram);
+  private projectsService = inject(ProjectsService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private projectId = this.route.snapshot.paramMap.get('id')!;
+
+  readonly project = computed(() =>
+    this.projectsService.getById(this.projectId)
+  );
+
+  readonly loading = this.projectsService.loading;
 
   constructor() {
-    this.projectId = this.route.snapshot.paramMap.get('id')!;
     this.goBack = this.goBack.bind(this);
   }
 
   ngOnInit() {
     this.telegram.BackButton.show();
     this.telegram.BackButton.onClick(this.goBack);
-
-    // Try to get project immediately (might be cached)
-    this.project = this.projectsService.getById(this.projectId);
   }
 
   goBack() {

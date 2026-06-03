@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IProject } from '../../services/projects';
+import { Icon } from '../icon/icon';
 
 @Component({
   selector: 'app-project-card',
-  imports: [RouterLink],
+  imports: [RouterLink, Icon],
   templateUrl: './project-card.html',
   styleUrl: './project-card.css',
 })

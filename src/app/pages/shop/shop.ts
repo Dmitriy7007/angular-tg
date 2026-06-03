@@ -1,16 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { Telegram } from '../../services/telegram';
 import { ProjectsService } from '../../services/projects';
-import { ProductList } from '../../components/product-list/product-list';
+import { ProjectList } from '../../components/project-list/project-list';
 
 @Component({
   selector: 'app-shop',
-  imports: [ProductList],
+  imports: [ProjectList],
   templateUrl: './shop.html',
   styleUrl: './shop.css',
 })
 export class Shop {
-  telegram = inject(Telegram);
+  private telegram = inject(Telegram);
   projectsService = inject(ProjectsService);
 
   constructor() {
