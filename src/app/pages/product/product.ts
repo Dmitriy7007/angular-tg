@@ -1,6 +1,6 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { Telegram } from '../../services/telegram';
-import { IProduct, Products } from '../../services/products';
+import { IProject, ProjectsService } from '../../services/projects';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -10,29 +10,31 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './product.css',
 })
 export class Product implements OnInit, OnDestroy {
-  product: IProduct;
+  project: IProject | undefined;
+  projectId: string;
   telegram = inject(Telegram);
-  products = inject(Products);
+  projectsService = inject(ProjectsService);
   router = inject(Router);
   route = inject(ActivatedRoute);
 
   constructor() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.product = this.products.getById(id!) as IProduct;
+    this.projectId = this.route.snapshot.paramMap.get('id')!;
     this.goBack = this.goBack.bind(this);
+  }
+
+  ngOnInit() {
+    this.telegram.BackButton.show();
+    this.telegram.BackButton.onClick(this.goBack);
+
+    // Try to get project immediately (might be cached)
+    this.project = this.projectsService.getById(this.projectId);
   }
 
   goBack() {
     this.router.navigate(['/']);
   }
 
-  ngOnInit() {
-    this.telegram.BackButton.show();
-    this.telegram.BackButton.onClick(this.goBack);
-  }
-
   ngOnDestroy(): void {
-    // this.telegram.BackButton.hide();
     this.telegram.BackButton.offClick(this.goBack);
   }
 }

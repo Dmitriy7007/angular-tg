@@ -1,5 +1,18 @@
-<app-product-list title="Курсы" subtitle="Все курсы" [products]="products.byGroup['skill']"></app-product-list>
-
-<app-product-list title="Курсы" subtitle="Все курсы" [products]="products.byGroup['intensive']"></app-product-list>
-
-<app-product-list title="Курсы" subtitle="Все курсы" [products]="products.byGroup['other']"></app-product-list>
+@if (projectsService.loading()) {
+  <div class="loader">
+    <div class="spinner"></div>
+    <p>Загрузка проектов...</p>
+  </div>
+} @else if (projectsService.error()) {
+  <div class="error">
+    <p>{{ projectsService.error() }}</p>
+  </div>
+} @else {
+  @for (group of projectsService.groups(); track group) {
+    <app-product-list
+      [title]="projectsService.getGroupLabel(group)"
+      [subtitle]="'Портфолио'"
+      [projects]="projectsService.byGroup()[group]"
+    ></app-product-list>
+  }
+}

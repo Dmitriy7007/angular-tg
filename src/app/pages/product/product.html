@@ -1,7 +1,87 @@
-<h2>
-  {{product.title}}
-</h2>
-<img [src]="product.image" [alt]="product.title" width="96" height="96" />
-<p>{{product.text}}</p>
-<p>{{product.time}}</p>
-<a [href]="product.link" target="_blank">Подробнее</a>
+@if (project) {
+  <div class="detail">
+    <!-- Hero: Video or Image -->
+    <div class="detail-hero">
+      @if (project.videoUrl) {
+        <video
+          [src]="project.videoUrl"
+          autoplay
+          muted
+          loop
+          playsinline
+          class="detail-media"
+        ></video>
+      } @else {
+        <img
+          [src]="project.previewImage"
+          [alt]="project.title"
+          class="detail-media"
+        />
+      }
+      <div class="detail-hero-overlay"></div>
+      <span class="detail-badge">{{ project.group }}</span>
+    </div>
+
+    <!-- Info -->
+    <div class="detail-content">
+      <h1 class="detail-title">{{ project.title }}</h1>
+
+      @if (project.description) {
+        <p class="detail-desc">{{ project.description }}</p>
+      }
+
+      <!-- Stack -->
+      <div class="detail-stack">
+        @for (tech of project.stack; track tech) {
+          <span class="chip">{{ tech }}</span>
+        }
+      </div>
+
+      <!-- Links -->
+      <div class="detail-actions">
+        @if (project.href) {
+          <a [href]="project.href" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            Demo
+          </a>
+        }
+        @if (project.git) {
+          <a [href]="project.git" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+            </svg>
+            GitHub
+          </a>
+        }
+        @if (project.boosty) {
+          <a [href]="project.boosty" target="_blank" rel="noopener noreferrer" class="btn btn-accent">
+            Boosty
+          </a>
+        }
+      </div>
+
+      <!-- Gallery -->
+      @if (project.images.length > 0) {
+        <div class="detail-gallery">
+          <h3 class="gallery-title">Скриншоты</h3>
+          <div class="gallery-grid">
+            @for (img of project.images; track img.id) {
+              <div class="gallery-item">
+                <img [src]="img.url" [alt]="img.alt || project.title" loading="lazy" />
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+} @else {
+  <div class="detail-loading">
+    <div class="spinner"></div>
+    <p>Загрузка...</p>
+  </div>
+}

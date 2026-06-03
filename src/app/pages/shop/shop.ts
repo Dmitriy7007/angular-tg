@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Telegram } from '../../services/telegram';
-import { Products } from '../../services/products';
+import { ProjectsService } from '../../services/projects';
 import { ProductList } from '../../components/product-list/product-list';
 
 @Component({
@@ -11,15 +11,9 @@ import { ProductList } from '../../components/product-list/product-list';
 })
 export class Shop {
   telegram = inject(Telegram);
-  products = inject(Products);
-  user: string;
+  projectsService = inject(ProjectsService);
 
   constructor() {
-    // this.telegram.MainButton.show();
     this.telegram.BackButton.hide();
-    this.user = this.telegram.User || 'shop';
-
-    // console.log(this.products.byGroup);
-    // console.log(this.telegram.User);
   }
 }

@@ -1,15 +1,15 @@
 import { Component, Input } from '@angular/core';
-import { IProduct } from '../../services/products';
-import { RouterLink } from '@angular/router';
+import { IProject } from '../../services/projects';
+import { ProjectCard } from '../project-card/project-card';
 
 @Component({
   selector: 'app-product-list',
-  imports: [RouterLink],
+  imports: [ProjectCard],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })
 export class ProductList {
   @Input() title: string = '';
   @Input() subtitle: string = '';
-  @Input() products: IProduct[] = [];
+  @Input() projects: IProject[] = [];
 }
